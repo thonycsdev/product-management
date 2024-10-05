@@ -38,7 +38,7 @@ export default function Home() {
         <img src="./txai_logo.svg" />
         <button onClick={handleSignIn} className="bg-txaiGreen500 w-[330px] h-[40px] rounded-sm">Entrar</button>
       </div>
-      <div className="h-full bg-txaiNeutralBG flex justify-center items-center flex-col">
+      <div className="h-full bg-txaiNeutralBG flex justify-evenly items-center flex-col">
         <div className="w-3/5">
           <div className="font-bold text-2xl mb-5">
             Login
@@ -71,8 +71,14 @@ export default function Home() {
             </div>
           </div>
         </div>
+        <div className="flex gap-1">
+          <label>
+            Não tem uma conta?
+          </label>
+          <div className="text-txaiGreen500 hover:cursor-pointer">cadastre-se agora</div>
+        </div>
       </div>
     </div>
 
-  );
+  )
 }
