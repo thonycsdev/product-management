@@ -1,0 +1,23 @@
+services:
+  app:
+    image: thonycoutdev/product-management-api-image:latest  
+    ports:
+      - "3001:3000"  
+    env_file: .env
+    depends_on:
+      - db  # Garante que o banco de dados seja iniciado antes da aplicação
+    command: /bin/sh -c "sleep 8 && yarn prisma db push && yarn start"
+  db:
+    image: mysql:latest
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword # Senha do usuário root
+      MYSQL_DATABASE: local_db # Nome do banco de dados inicial
+      MYSQL_USER: local_user # Nome do usuário
+      MYSQL_PASSWORD: local_password # Senha do usuário
+    ports:
+      - "3306:3306"
+    volumes:
+      - pgdata:/var/lib/mysql
+volumes:
+  pgdata:  
