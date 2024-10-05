@@ -1,5 +1,6 @@
 import { useUser } from "@/contexts/userContext";
 import loginService, { SignInInfomation } from "@/services/loginService";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function Home() {
@@ -75,7 +76,11 @@ export default function Home() {
           <label>
             Não tem uma conta?
           </label>
-          <div className="text-txaiGreen500 hover:cursor-pointer">cadastre-se agora</div>
+          <div className="text-txaiGreen500 hover:cursor-pointer">
+            <Link href="/signup">
+              cadastre-se agora
+            </Link>
+          </div>
         </div>
       </div>
     </div>
