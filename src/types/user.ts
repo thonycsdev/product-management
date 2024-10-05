@@ -1,6 +1,7 @@
 import { Roles } from "./roles";
 
 export type User = {
+  username: string;
   name: string;
   password?: string;
   cpf: string;

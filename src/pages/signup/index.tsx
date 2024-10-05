@@ -1,3 +1,4 @@
+import loginService from "@/services/loginService";
 import { Roles } from "@/types/roles";
 import { User } from "@/types/user";
 import fileToBase64 from "@/utils/fileToBase64";
@@ -51,17 +52,19 @@ export default function SignUp() {
     setRole(event.target.value as Roles);
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const payload: User = {
       role: role,
       name: name,
+      username: username,
       password: password,
       cpf: cpf,
       email: email,
       photo: file
     }
 
-    console.log(payload);
+    await loginService.signUp(payload);
+
   }
 
 
