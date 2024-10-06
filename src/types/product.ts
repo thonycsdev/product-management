@@ -1,9 +1,9 @@
 export type Product = {
-  id: number;
+  id?: number;
   price: number;
   unitPrice?: number;
   name: string;
   amount: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
