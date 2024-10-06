@@ -38,48 +38,20 @@ const columns: readonly Column[] = [
 ];
 
 
-function createData(product: Product): Product {
-	const unit_price = product.price / product.amount;
-	return { ...product, unitPrice: unit_price };
+function createData(products: Product[]): Product[] {
+
+	if (!products) return [];
+	const data: Product[] = products.map(product => {
+		const unit_price = product.price / product.amount;
+		return { ...product, unitPrice: unit_price };
+	});
+	return data;
 }
 
-const rows = [
-	createData({
-		id: 1,
-		price: 19.99,
-		name: "Trakinas",
-		amount: 10,
-		createdAt: new Date(),
-		updatedAt: new Date(),
-	}),
-	createData({
-		id: 2,
-		price: 19.99,
-		name: "Trakinas",
-		amount: 10,
-		createdAt: new Date(),
-		updatedAt: new Date(),
-	}),
-	createData({
-		id: 3,
-		price: 19.99,
-		name: "Trakinas",
-		amount: 10,
-		createdAt: new Date(),
-		updatedAt: new Date(),
-	}),
-	createData({
-		id: 4,
-		price: 19.99,
-		name: "Trakinas",
-		amount: 10,
-		createdAt: new Date(),
-		updatedAt: new Date(),
-	}),
-];
-export default function TableComponent() {
+export default function TableComponent(props: { products: Product[] }) {
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(10);
+	const rows: Product[] = createData(props.products);
 
 	const handleChangePage = (event: unknown, newPage: number) => {
 		setPage(newPage);
@@ -92,7 +64,7 @@ export default function TableComponent() {
 
 	const checkTableCellType = (value: any, column: Column) => {
 
-		if (typeof value === typeof new Date()) {
+		if (new Date(value).getTime() && typeof value != "number") {
 			return new Date(value).toLocaleDateString('pt-BR');
 		} else if (column.format && typeof value === "number") {
 			return column.format(value);
