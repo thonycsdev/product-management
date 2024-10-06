@@ -1,6 +1,7 @@
 import { useUser } from "@/contexts/userContext";
 import loginService, { SignInInfomation } from "@/services/loginService";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Home() {
@@ -8,7 +9,7 @@ export default function Home() {
   const [cpf, setCpf] = useState("");
   const [password, setPassword] = useState("");
   const [checkbox, setCheckbox] = useState(false);
-
+  const router = useRouter();
 
   const handleSignIn = async () => {
     const payload: SignInInfomation = {
@@ -21,6 +22,8 @@ export default function Home() {
     }
     setUser(response);
     alert(`Welcome ${response.name}`)
+    router.push("/products");
+
     return;
   }
 
