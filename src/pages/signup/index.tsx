@@ -3,6 +3,7 @@ import { Roles } from "@/types/roles";
 import { User } from "@/types/user";
 import fileToBase64 from "@/utils/fileToBase64";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 export default function SignUp() {
@@ -15,6 +16,7 @@ export default function SignUp() {
   const [isInvalid, setIsInvalid] = useState(true);
   const [role, setRole] = useState<Roles>(Roles.USER);
   const [file, setFile] = useState<string>("");
+  const router = useRouter();
 
 
   const handleFile = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,8 +64,14 @@ export default function SignUp() {
       email: email,
       photo: file
     }
+    try {
+      await loginService.signUp(payload);
+      alert("Cadastro conluído com sucesso!");
+      router.push("/products")
 
-    await loginService.signUp(payload);
+    } catch (error) {
+      console.error(error);
+    }
 
   }
 

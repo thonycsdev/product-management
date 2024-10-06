@@ -1,11 +1,13 @@
+import productService from "@/services/productService";
 import { Product } from "@/types/product";
-import { addDays } from "date-fns";
+import { addDays, format } from "date-fns";
 import { ChangeEvent, useEffect, useState } from "react";
 
 export type ProductModalProps = {
 	type: "create" | "update";
 	product?: Product;
 	onClose: () => void;
+	onSuccess: () => void;
 }
 
 export default function ProductModal(props: ProductModalProps) {
@@ -14,7 +16,7 @@ export default function ProductModal(props: ProductModalProps) {
 	const [product, setProduct] = useState<Product>({} as Product);
 
 	useEffect(() => {
-		const productFromProps = checkProductState(props.product);
+		const productFromProps = checkProductState(props.product, props.type);
 		setProduct(productFromProps);
 	}, [])
 
@@ -45,8 +47,19 @@ export default function ProductModal(props: ProductModalProps) {
 		return;
 	}
 
-	const handleSubmit = () => {
-		console.log(product);
+	const handleSubmit = async () => {
+		try {
+			if (props.type == "create") {
+				await productService.createProduct(product);
+			} else {
+				await productService.updateProduct(product);
+			}
+
+			props.onSuccess();
+
+		} catch (error) {
+			console.error(error)
+		}
 	}
 	return (
 		<div className="w-[500px] h-[500px]">
@@ -55,8 +68,8 @@ export default function ProductModal(props: ProductModalProps) {
 					<div className="text-xl">
 						{title}
 					</div>
-					<svg onClick={props.onClose} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+					<svg onClick={props.onClose} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
+						<path d="M6 18 18 6M6 6l12 12" />
 					</svg>
 				</div>
 				<div className="flex flex-col justify-start gap-10 h-fit">
@@ -64,7 +77,7 @@ export default function ProductModal(props: ProductModalProps) {
 						<label>
 							Data de cadastro:
 						</label>
-						<input onChange={handleDate} className="bg-transparent border-b-txaiGreen500 border-solid border-b-2 w-[317px] h-[32px]" type="date" value={formatProductDate(product.createdAt)} />
+						<input disabled onChange={handleDate} className="bg-transparent border-b-txaiGreen500 border-solid border-b-2 w-[317px] h-[32px]" type="date" value={product.createdAt ? format(product.createdAt!, "yyyy-MM-dd") : ""} />
 					</div>
 					<div className="grid grid-cols-3 grid-rows-1 gap-5">
 						<div className="flex flex-col col-span-2">
@@ -97,12 +110,13 @@ export default function ProductModal(props: ProductModalProps) {
 }
 
 
-function checkProductState(product?: Product) {
-	if (product) return product;
+function checkProductState(product: Product | undefined, modalType: "create" | "update") {
+	if (product && modalType === "update") return product;
 	const newProduct: Product = {
 		price: 0,
 		name: "",
 		amount: 0,
+		createdAt: new Date()
 	};
 	return newProduct;
 }
@@ -127,7 +141,7 @@ function formatProductDate(date: Date | undefined) {
 function formatDateToInputFormat(date: Date) {
 
 	const y = date.getFullYear();
-	const m = String(date.getMonth() + 1).padStart(2, '0'); // `getMonth()` retorna o mês de 0 a 11
+	const m = String(date.getMonth() + 1).padStart(2, '0');
 	const d = String(date.getDate()).padStart(2, '0');
 	const fmt = `${y}-${m}-${d}`;
 	return fmt;

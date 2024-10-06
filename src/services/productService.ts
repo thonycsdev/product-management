@@ -6,10 +6,23 @@ async function getProducts() {
   return response.data as Product[];
 }
 
-async function updateProduct() {}
+async function updateProduct(payload: Product) {
+  const response = await axiosConfig.axiosInstance.put(
+    `/product/${payload.id!}`,
+    payload,
+  );
 
-async function createProduct() {}
+  console.log(response);
+}
 
-async function deleteProduct() {}
+async function createProduct(payload: Product) {
+  const response = await axiosConfig.axiosInstance.post("/product", payload);
+  console.log(response);
+}
 
-export default { getProducts };
+async function deleteProduct(id: number) {
+  const response = await axiosConfig.axiosInstance.delete(`/product/${id}`);
+  console.log(response);
+}
+
+export default { deleteProduct, getProducts, createProduct, updateProduct };
