@@ -1,40 +1,73 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Product Management Frontend
 
-## Getting Started
+Esse é o projeto da parte visual do Product Management. Feito em **Next.JS** usando **React 16**.
 
-First, run the development server:
+
+## Funcionalidades
+
+- **Gerenciamento de Usuários**:
+  - Criar um novo usuário
+  - Listar todos os usuários
+
+- **Gerenciamento de Produtos**:
+  - Criar um novo produto
+  - Listar todos os produtos
+  - Atualizar informações de um produto existente
+  - Excluir um produto
+
+
+
+
+
+## Dependências
+- **API Backend** (Necessário rodar o código do backend na porta 3001)
+- **Node.js** (versão 18 ou superior) ou utilize a versão LTS (*Hydrogen*)
+- **nvm** (opcional, para gerenciamento de versões do Node.js)
+## Instalação
+
+
+Clone o repositório.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+  git clone https://github.com/thonycsdev/product-management.git
+  cd product-management
+```
+Utilize o `nvm` para garantir que está usando a versão LTS (Hydrogen) do Node.js:
+
+```bash
+nvm use
+```
+Instale as dependências com `Yarn`:
+```bash
+yarn
+```
+Caso não tenha o yarn instalado, você pode instalá-lo globalmente:
+```bash
+npm install --global yarn
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Inicie o servidor de desenvolvimento
+```bash
+yarn dev
+```
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Autor
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- [@thonycsdev](https://github.com/thonycsdev)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Roadmap
 
-## Learn More
+- Colocar URL da api na .env
+- Colocar tratamento de inputs para: **CPF** e **e-mail**
+- Criar componente para ser o input de valores monetários
+- Colocar indicadores de carregamento
+- Colocar indicadores de erros.
+- Formatação e mascaras em diversos inputs nos formulários
+- Efeitos e animações
 
-To learn more about Next.js, take a look at the following resources:
+- **Terminar a implementação de Auth com `useUser`**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Privar rotas
+- Colocar permissões adequadas para Administrador e Comum.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
